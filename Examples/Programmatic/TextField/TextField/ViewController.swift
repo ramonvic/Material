@@ -39,6 +39,9 @@ import UIKit
 import Material
 
 class ViewController: UIViewController, TextFieldDelegate {
+	private var nameField: TextField!
+	private var emailField: TextField!
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		prepareView()
@@ -53,32 +56,34 @@ class ViewController: UIViewController, TextFieldDelegate {
 	
 	/// Prepares the name TextField.
 	private func prepareNameField() {
-		let w: CGFloat = 300
-		let x: CGFloat = (MaterialDevice.width - w) / 2
-		let textField: TextField = TextField(frame: CGRectMake(x, 100, w, 24))
-		textField.placeholder = "First Name"
-		view.addSubview(textField)
+		nameField = TextField()
+		nameField.placeholder = "Name"
+		view.addSubview(nameField)
+		
+		nameField.translatesAutoresizingMaskIntoConstraints = false
+		MaterialLayout.alignFromTop(view, child: nameField, top: 100)
+		MaterialLayout.alignToParentHorizontally(view, child: nameField, left: 20, right: 20)
+		
 	}
 	
 	/// Prepares the email TextField.
 	private func prepareEmailField() {
 		let w: CGFloat = 300
 		let x: CGFloat = (MaterialDevice.width - w) / 2
-		let textField: TextField = TextField(frame: CGRectMake(x, 200, w, 24))
-		textField.placeholder = "Email"
-		textField.delegate = self
+		emailField = TextField(frame: CGRectMake(x, 200, w, 24))
+		emailField.placeholder = "Email"
+		emailField.delegate = self
 
 		/*
 		Used to display the error message, which is displayed when
 		the user presses the 'return' key.
 		*/
-		textField.detailLabel = UILabel()
-		textField.detailLabel!.text = "Email is incorrect."
-		textField.detailLabel!.font = RobotoFont.regularWithSize(12)
-		textField.detailLabelActiveColor = MaterialColor.red.accent3
-//		textField.detailLabelAutoHideEnabled = false // Uncomment this line to have manual hiding.
+		emailField.detailLabel.text = "Email is incorrect."
+		emailField.detailLabel.font = RobotoFont.regularWithSize(12)
+		emailField.detailLabelActiveColor = MaterialColor.red.accent3
+//		emailField.detailLabelAutoHideEnabled = false // Uncomment this line to have manual hiding.
 		
-		view.addSubview(textField)
+		view.addSubview(emailField)
 	}
 	
 	/// Executed when the 'return' key is pressed when using the emailField.

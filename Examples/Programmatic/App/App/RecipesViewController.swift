@@ -104,7 +104,7 @@ class RecipesViewController: UIViewController {
 		
 		let vc: AppSearchBarController = AppSearchBarController(rootViewController: RecommendationViewController(dataSourceItems: recommended))
 		vc.modalTransitionStyle = .CrossDissolve
-		navigationController?.presentViewController(vc, animated: true, completion: nil)
+		presentViewController(vc, animated: true, completion: nil)
 	}
 	
 	/// Prepares the items Array.
