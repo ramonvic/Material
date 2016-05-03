@@ -28,51 +28,20 @@
 * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/*
-The following is an example of using a TextField. TextFields offer details
-that describe the usage and input results of text. For example, when a
-user enters an incorrect email, it is possible to display an error message
-under the TextField.
-*/
-
 import UIKit
-import Material
 
-class ViewController: UIViewController, TextFieldDelegate {
-	@IBOutlet weak var nameField: TextField!
-	@IBOutlet weak var emailField: TextField!
-	
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		prepareView()
-		prepareNameField()
-		prepareEmailField()
-	}
-	
-	/// General preparation statements.
-	private func prepareView() {
-		view.backgroundColor = MaterialColor.white
-	}
-	
-	/// Prepares the name TextField.
-	private func prepareNameField() {
-		nameField.placeholder = "First Name"
-	}
-	
-	/// Prepares the email TextField.
-	private func prepareEmailField() {
-		emailField.placeholder = "Email"
-		emailField.delegate = self
-		
-		/*
-		Used to display the error message, which is displayed when
-		the user presses the 'return' key.
-		*/
-		emailField.detail = "Email is incorrect."
-	}
-	
-	/// Executed when the 'return' key is pressed when using the emailField.
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
-		return false
+public class IconButton : MaterialButton {
+	/**
+	Prepares the view instance when intialized. When subclassing,
+	it is recommended to override the prepareView method
+	to initialize property values and other setup operations.
+	The super.prepareView method should always be called immediately
+	when subclassing.
+	*/
+	public override func prepareView() {
+		super.prepareView()
+		cornerRadiusPreset = .Radius1
+		contentEdgeInsetsPreset = .WideRectangle3
+		pulseAnimation = .Center
 	}
 }

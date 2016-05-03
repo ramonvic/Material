@@ -41,12 +41,20 @@ import Material
 class ViewController: UIViewController, TextFieldDelegate {
 	private var nameField: TextField!
 	private var emailField: TextField!
+	private var passwordField: TextField!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		prepareView()
 		prepareNameField()
 		prepareEmailField()
+		preparePasswordField()
+		prepareResignResponderButton()
+	}
+	
+	/// Programmatic update for the textField as it rotates.
+	override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+		emailField.width = view.bounds.height - 80
 	}
 	
 	/// General preparation statements.
@@ -54,69 +62,110 @@ class ViewController: UIViewController, TextFieldDelegate {
 		view.backgroundColor = MaterialColor.white
 	}
 	
+	/// Prepares the resign responder button.
+	private func prepareResignResponderButton() {
+		let btn: RaisedButton = RaisedButton()
+		btn.translatesAutoresizingMaskIntoConstraints = false
+		btn.addTarget(self, action: #selector(handleResignResponderButton), forControlEvents: .TouchUpInside)
+		btn.setTitle("Resign", forState: .Normal)
+		btn.setTitleColor(MaterialColor.blue.base, forState: .Normal)
+		btn.setTitleColor(MaterialColor.blue.base, forState: .Highlighted)
+		view.addSubview(btn)
+		
+		MaterialLayout.alignFromBottomRight(view, child: btn, bottom: 24, right: 24)
+		MaterialLayout.size(view, child: btn, width: 100, height: 50)
+	}
+	
+	/// Handle the resign responder button.
+	internal func handleResignResponderButton() {
+		nameField?.resignFirstResponder()
+		emailField?.resignFirstResponder()
+		passwordField?.resignFirstResponder()
+		
+	}
+	
 	/// Prepares the name TextField.
 	private func prepareNameField() {
 		nameField = TextField()
+		nameField.text = "Daniel Dahan"
 		nameField.placeholder = "Name"
+		nameField.detail = "Your given name"
+		nameField.textAlignment = .Center
+		nameField.clearButtonMode = .WhileEditing
+		nameField.delegate = self
+		
+		// The translatesAutoresizingMaskIntoConstraints property must be set to enable AutoLayout correctly.
+		nameField.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(nameField)
 		
-		nameField.translatesAutoresizingMaskIntoConstraints = false
-		MaterialLayout.alignFromTop(view, child: nameField, top: 100)
-		MaterialLayout.alignToParentHorizontally(view, child: nameField, left: 20, right: 20)
-		
+		// Size the TextField to the maximum width, less 40 pixels on either side
+		// with a top margin of 40 pixels.
+		MaterialLayout.alignFromTop(view, child: nameField, top: 40)
+		MaterialLayout.alignToParentHorizontally(view, child: nameField, left: 40, right: 40)
 	}
 	
 	/// Prepares the email TextField.
 	private func prepareEmailField() {
-		let w: CGFloat = 300
-		let x: CGFloat = (MaterialDevice.width - w) / 2
-		emailField = TextField(frame: CGRectMake(x, 200, w, 24))
+		emailField = TextField(frame: CGRectMake(40, 120, view.bounds.width - 80, 32))
 		emailField.placeholder = "Email"
+		emailField.detail = "Error, incorrect email"
+		emailField.enableClearIconButton = true
 		emailField.delegate = self
-
-		/*
-		Used to display the error message, which is displayed when
-		the user presses the 'return' key.
-		*/
-		emailField.detailLabel.text = "Email is incorrect."
-		emailField.detailLabel.font = RobotoFont.regularWithSize(12)
-		emailField.detailLabelActiveColor = MaterialColor.red.accent3
-//		emailField.detailLabelAutoHideEnabled = false // Uncomment this line to have manual hiding.
+		
+		emailField.placeholderColor = MaterialColor.amber.darken4
+		emailField.placeholderActiveColor = MaterialColor.pink.base
+		emailField.dividerColor = MaterialColor.cyan.base
+		emailField.detailColor = MaterialColor.indigo.accent1
 		
 		view.addSubview(emailField)
 	}
 	
+	/// Prepares the password TextField.
+	private func preparePasswordField() {
+		passwordField = TextField()
+		passwordField.placeholder = "Password"
+		passwordField.detail = "At least 8 characters"
+		passwordField.clearButtonMode = .WhileEditing
+		passwordField.enableVisibilityIconButton = true
+		passwordField.delegate = self
+		
+		// Setting the visibilityFlatButton color.
+		passwordField.visibilityIconButton?.tintColor = MaterialColor.green.base.colorWithAlphaComponent(passwordField.secureTextEntry ? 0.38 : 0.54)
+		
+		// The translatesAutoresizingMaskIntoConstraints property must be set to enable AutoLayout correctly.
+		passwordField.translatesAutoresizingMaskIntoConstraints = false
+		view.addSubview(passwordField)
+		
+		// Size the TextField to the maximum width, less 40 pixels on either side
+		// with a top margin of 200 pixels.
+		MaterialLayout.alignFromTop(view, child: passwordField, top: 200)
+		MaterialLayout.alignToParentHorizontally(view, child: passwordField, left: 40, right: 40)
+	}
+	
 	/// Executed when the 'return' key is pressed when using the emailField.
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
-		(textField as! TextField).detailLabelHidden = 0 == textField.text?.utf16.count
 		return true
 	}
 	
 	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-		print("Should Begin")
 		return true
 	}
 	
 	func textFieldDidBeginEditing(textField: UITextField) {
-		print("Did Begin")
 	}
 	
 	func textFieldShouldEndEditing(textField: UITextField) -> Bool {
-		print("Should End")
 		return true
 	}
 	
 	func textFieldDidEndEditing(textField: UITextField) {
-		print("Did End")
 	}
 	
 	func textFieldShouldClear(textField: UITextField) -> Bool {
-		print("Should Clear")
 		return true
 	}
 	
 	func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-		print("Should Change")
 		return true
 	}
 }

@@ -42,7 +42,7 @@ class ItemViewController: UIViewController {
 	private var detailLabel: UILabel!
 	
 	/// NavigationBar share button.
-	private var shareButton: FlatButton!
+	private var shareButton: IconButton!
 	
 	/// MaterialScrollView.
 	private var scrollView: UIScrollView!
@@ -102,8 +102,7 @@ class ItemViewController: UIViewController {
 	/// Prepares the shareButton.
 	private func prepareShareButton() {
 		let image: UIImage? = MaterialIcon.cm.share
-		shareButton = FlatButton()
-		shareButton.pulseScale = false
+		shareButton = IconButton()
 		shareButton.pulseColor = MaterialColor.white
 		shareButton.setImage(image, forState: .Normal)
 		shareButton.setImage(image, forState: .Highlighted)
@@ -126,8 +125,7 @@ class ItemViewController: UIViewController {
 			
 			imageCardView = ImageCardView()
 			
-			imageCardView.pulseScale = false
-			imageCardView.pulseColor = nil
+			imageCardView.pulseAnimation = .None
 			imageCardView.divider = false
 			imageCardView.depth = .None
 			imageCardView.contentInsetPreset = .Square3

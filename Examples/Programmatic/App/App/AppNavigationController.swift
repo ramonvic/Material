@@ -44,6 +44,7 @@ class AppNavigationController: NavigationController {
 	override func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
 		statusBarView?.hidden = MaterialDevice.statusBarHidden
+		print(MaterialDevice.statusBarHidden)
 	}
 	
 	/// Prepares the statusBarView
@@ -56,7 +57,6 @@ class AppNavigationController: NavigationController {
 		MaterialLayout.alignFromTop(view, child: statusBarView!)
 		MaterialLayout.alignToParentHorizontally(view, child: statusBarView!)
 		MaterialLayout.height(view, child: statusBarView!, height: 20)
-		
 	}
 	
 	/// Prepares the navigationBar
